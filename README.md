@@ -1,6 +1,7 @@
 # Thunder-Force
 
 # 🌟 JavaScript Level 3 Exercises
+#### https://www.linkedin.com/posts/harisahmad59_frontend-development-2025-ugcPost-7269722602951065601-Eq7j?utm_source=share&utm_medium=member_desktop
 
 This repository contains a set of **JavaScript exercises** designed to enhance your skills through hands-on coding problems. Each exercise targets a fundamental concept, ranging from basic control structures to more advanced array manipulations and algorithm-based challenges.
 
