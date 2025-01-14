@@ -57,28 +57,40 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   
     // Handle form submission
-    productForm.addEventListener("submit", (e) => {
+    productForm.addEventListener("submit", async (e) => {
       e.preventDefault();
   
       const name = document.getElementById("name").value.trim();
       const price = parseFloat(document.getElementById("price").value);
       const description = document.getElementById("description").value.trim();
-      const image = document.getElementById("image").value.trim();
+      const imageInput = document.getElementById("image");
   
-      const product = { name, price, description, image };
-      const editIndex = productForm.dataset.editIndex;
-  
-      if (editIndex !== undefined) {
-        // Update existing product
-        updateProduct(editIndex, product);
-        delete productForm.dataset.editIndex;
-      } else {
-        // Add new product
-        saveProduct(product);
-        addProductToDOM(product, JSON.parse(localStorage.getItem("products")).length - 1);
+      if (!imageInput.files[0]) {
+        alert("Please upload an image.");
+        return;
       }
   
-      productForm.reset();
+      // Read the file as a base64 string
+      const reader = new FileReader();
+      reader.onload = () => {
+        const image = reader.result;
+  
+        const product = { name, price, description, image };
+        const editIndex = productForm.dataset.editIndex;
+  
+        if (editIndex !== undefined) {
+          // Update existing product
+          updateProduct(editIndex, product);
+          delete productForm.dataset.editIndex;
+        } else {
+          // Add new product
+          saveProduct(product);
+          addProductToDOM(product, JSON.parse(localStorage.getItem("products")).length - 1);
+        }
+  
+        productForm.reset();
+      };
+      reader.readAsDataURL(imageInput.files[0]);
     });
   
     // Handle edit and delete buttons
@@ -91,7 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("name").value = product.name;
         document.getElementById("price").value = product.price;
         document.getElementById("description").value = product.description;
-        document.getElementById("image").value = product.image;
+        // Image input reset as it can't show base64 string
+        document.getElementById("image").value = "";
   
         productForm.dataset.editIndex = index;
       }
