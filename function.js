@@ -5,7 +5,6 @@
  }
  sayHi();
 
- //function apply
 
  function sumUp (a,b){
    
@@ -20,7 +19,6 @@ function callYourEx( greeting,name) {
 }
 callYourEx('hello','Angellailah');
 
-//bult-in function
 
   function pickUp(){
   let b= new Date();
