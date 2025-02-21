@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Chat & Photo Gallery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    /* General Layout */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(45deg, #ff5733, #33ff57, #3357ff);
+    background-size: 400% 400%;
+    animation: gradientBG 10s infinite alternate;
+    text-align: center;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+}
+
+/* First Welcoming Page */
+.landing-page {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    background: #222;
+}
+
+.landing-page h1 {
+    font-size: 3rem;
+}
+
+.landing-page button {
+    background-color: #333;
+    padding: 15px 25px;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.landing-page button:hover {
+    background-color: #f39c12;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Second Interactive Page */
+.interactive-page {
+    background-color: #f1f1f1;
+    padding: 60px 20px;
+}
+
+.hover-box {
+    width: 200px;
+    height: 200px;
+    background-color: #3357ff;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: white;
+    transition: transform 0.5s ease, background-color 0.5s ease;
+}
+
+.hover-box:hover {
+    transform: scale(1.1);
+    background-color: #f39c12;
+}
+
+/* Chat and Photo Gallery */
+.chat-container {
+    width: 400px;
+    background: transparent;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 20px auto;
+}
+
+.messages {
+    height: 300px;
+    overflow-y: auto;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.message {
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.own {
+    background: #a7dab0;
+    text-align: right;
+}
+
+.other {
+    background: #3357ff;
+    color: white;
+    text-align: left;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #f39c12;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+</style>
+<body>
+
+    <!-- First Welcoming Page (Landing Page) -->
+    <section class="landing-page">
+        <div class="landing-content">
+            <h1>Welcome to !Net</h1>
+            <p>Connect, share, and explore! Discover stunning photos and chat with our community.</p>
+            <button onclick="showModal()">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Stay updated with the latest content and news from our community.</p>
+            <input type="email" placeholder="Enter your email" id="emailInput">
+            <button onclick="subscribe()">Subscribe</button>
+        </div>
+    </div>
+
+    <!-- Second Welcoming Page (Interactive) -->
+    <section class="interactive-page" id="interactivePage">
+        <h2>Discover More Features!</h2>
+        <p>Hover over the box to see the magic happen.</p>
+        <div class="hover-box">
+            <p>✨ Hover over me!</p>
+        </div>
+    </section>
+
+    <!-- Photo Gallery and Chat Section (Original) -->
+    <h1>Photo Gallery</h1>
+    <div id="gallery"></div>
+
+    <div class="chat-container">
+        <div id="messages" class="messages"></div>
+        <input type="text" id="messageInput" placeholder="Type a comment...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 !Net | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        // Modal functionality
+function showModal() {
+    document.getElementById('modal').style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = "none";
+}
+
+function subscribe() {
+    const email = document.getElementById('emailInput').value;
+    if (email) {
+        alert(`Thank you for subscribing with ${email}!`);
+        closeModal();
+    } else {
+        alert("Please enter a valid email address.");
+    }
+}
+
+// Scroll to second interactive page after clicking the button on the landing page
+document.querySelector(".landing-page button").addEventListener("click", function() {
+    window.scrollTo({
+        top: document.getElementById('interactivePage').offsetTop,
+        behavior: "smooth"
+    });
+});
+
+// Add your original WebSocket and gallery code here, or import from previous
+  const socket = new WebSocket('ws://localhost:3000');
+        const messagesDiv = document.getElementById('messages');
+        const apiKey = "bqqHAEl5vh9YEj4OO9O3ZEQQg8wRtsWBzwyQpu0L8C7Wbj3NCnPC7kev";
+        const gallery = document.getElementById("gallery");
+
+        socket.onmessage = function(event) {
+            const message = document.createElement('div');
+            message.classList.add('message', 'other');
+            message.textContent = event.data;
+            messagesDiv.appendChild(message);
+        };
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            if (input.value.trim() !== '') {
+                const message = document.createElement('div');
+                message.classList.add('message', 'own');
+                message.textContent = input.value;
+                messagesDiv.appendChild(message);
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send(input.value);
+                }
+                input.value = '';
+            }
+        }
+
+        function searchImages() {
+            const query = document.getElementById("searchQuery").value;
+            const url = query
+                ? `https://api.pexels.com/v1/search?query=${query}&per_page=12`
+                : "https://api.pexels.com/v1/curated?per_page=12";
+            
+            fetch(url, { headers: { Authorization: apiKey } })
+                .then(response => response.json())
+                .then(data => {
+                    displayImages(data.photos);
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+
+        function displayImages(photos) {
+            gallery.innerHTML = "";
+            photos.forEach(photo => {
+                const photoDiv = document.createElement("div");
+                photoDiv.className = "photo";
+                const img = document.createElement("img");
+                img.src = photo.src.medium;
+                photoDiv.appendChild(img);
+                gallery.appendChild(photoDiv);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            searchImages();
+        });
+    </script>
+</body>
+</html>
