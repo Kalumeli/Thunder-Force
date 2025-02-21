@@ -4,14 +4,14 @@
     margin: 0 auto;
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
   }
   
   /* Form Styling */
   form {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
